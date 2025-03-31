@@ -29,9 +29,11 @@
                             return;
                         case "1":
                             Console.WriteLine("Cadastrar um novo usuário");
+                            CadastrarUsuário();
                             break;
                         case "2":
                             Console.WriteLine("Cadastrar uma nova tarefa");
+                            NovaTarefa();
                             break;
                         case "3":
                             Console.WriteLine("Excluir uma tarefa.");
@@ -42,16 +44,52 @@
                         case "5":
                             Console.WriteLine("Listar tarefas.");
                             break;
-                        default: 
+                        default:
                             opcao = "Inválido";
                             Console.WriteLine("Escolha uma opção de 0 até 5:");
                             break;
                     }
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     Console.WriteLine($"Exceção 1 - Exception\n{ex}");
                 }
             }
         }
+        static void CadastrarUsuário()
+        {
+            Console.WriteLine("\nDigite o nome: ");
+            string nome = Console.ReadLine();
 
+            Console.WriteLine("\nDigite seu email: ");
+            string email = Console.ReadLine();
+
+            NovoResponsavel novoResponsavel = new NovoResponsavel(nome, email);
+            Console.WriteLine(novoResponsavel.ExibirInformacoes());
+
+            Console.WriteLine("\nUsuário cadastrado.");
+        }
+        static void NovaTarefa()
+        {
+            Console.WriteLine("\nTítulo:");
+            string titulo = Console.ReadLine();
+
+            Console.WriteLine("\nData Limite:");
+            string dataLimite = Console.ReadLine();
+
+            Console.WriteLine($"\nStatus da tarefa:\n- A fazer.\n- Em Andamento.\n- Concluída.");
+            string status = Console.ReadLine();
+
+            Console.WriteLine($"\nPrioridade:\n- Baixa.\n- Média.\n- Alta.");
+            string prioridade = Console.ReadLine();
+
+            Console.WriteLine("\nNome do usuário:");
+            string nome = Console.ReadLine();
+
+            NovaTarefa novaTarefa = new NovaTarefa(titulo, dataLimite, status, prioridade, nome);
+            Console.WriteLine(novaTarefa.ExibirInformacoes());
+
+            Console.WriteLine("\nTarefa cadastrada.");
+        }
     }
 }
