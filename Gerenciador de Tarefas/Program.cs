@@ -131,7 +131,7 @@
                         {
                             if (tarefa.nome == nome)
                             {
-                                Console.WriteLine($"{tarefa.titulo} - {tarefa.dataLimite} - {tarefa.status} - {tarefa.prioridade} - {tarefa.nome}");
+                                Console.WriteLine($"\nTítulo: {tarefa.titulo}\nData Limite: {tarefa.dataLimite}\nStatus: {tarefa.status}\nPrioridade: {tarefa.prioridade}\nNome: {tarefa.nome}");
                             }
                         }
                     }
@@ -141,7 +141,7 @@
                         {
                             if (tarefa.nome == nome)
                             {
-                                Console.WriteLine($"{tarefa.titulo} - {tarefa.dataLimite} - {tarefa.status} - {tarefa.prioridade} - {tarefa.nome}");
+                                Console.WriteLine($"\nTítulo: {tarefa.titulo}\nData Limite: {tarefa.dataLimite}\nStatus: {tarefa.status}\nPrioridade: {tarefa.prioridade}\nNome: {tarefa.nome}");
                             }
                         }
                     }
@@ -151,7 +151,7 @@
                         {
                             if (tarefa.nome == nome)
                             {
-                                Console.WriteLine($"{tarefa.titulo} - {tarefa.dataLimite} - {tarefa.status} - {tarefa.prioridade} - {tarefa.nome}");
+                                Console.WriteLine($"\nTítulo: {tarefa.titulo}\nData Limite: {tarefa.dataLimite}\nStatus: {tarefa.status}\nPrioridade: {tarefa.prioridade}\nNome: {tarefa.nome}");
                             }
                         }
                     }
