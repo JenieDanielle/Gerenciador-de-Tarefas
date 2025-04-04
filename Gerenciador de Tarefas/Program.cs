@@ -2,6 +2,11 @@
 {
     internal class Program
     {
+        static List<NovoResponsavel> usuarios = new List<NovoResponsavel>();
+        static List<NovaTarefa> tarefas = new List<NovaTarefa>();
+        static List<NovaTarefa> tarefasPendentes = new List<NovaTarefa>();
+        static List<NovaTarefa> tarefasConcluidas = new List<NovaTarefa>();
+
         static void Main()
         {
             while (true)
@@ -43,6 +48,7 @@
                             break;
                         case "5":
                             Console.WriteLine("Listar tarefas.");
+                            ListarTarefa();
                             break;
                         default:
                             opcao = "Inválido";
@@ -58,6 +64,7 @@
         }
         static void CadastrarUsuário()
         {
+
             Console.WriteLine("\nDigite o nome: ");
             string nome = Console.ReadLine();
 
@@ -67,6 +74,7 @@
             NovoResponsavel novoResponsavel = new NovoResponsavel(nome, email);
             Console.WriteLine(novoResponsavel.ExibirInformacoes());
 
+            usuarios.Add(novoResponsavel);
             Console.WriteLine("\nUsuário cadastrado.");
         }
         static void NovaTarefa()
@@ -77,7 +85,7 @@
             Console.WriteLine("\nData Limite:");
             string dataLimite = Console.ReadLine();
 
-            Console.WriteLine($"\nStatus da tarefa:\n- A fazer.\n- Em Andamento.\n- Concluída.");
+            Console.WriteLine($"\nStatus da tarefa:\n- Pendente.\n- Em andamento.\n- Concluída.");
             string status = Console.ReadLine();
 
             Console.WriteLine($"\nPrioridade:\n- Baixa.\n- Média.\n- Alta.");
@@ -89,7 +97,75 @@
             NovaTarefa novaTarefa = new NovaTarefa(titulo, dataLimite, status, prioridade, nome);
             Console.WriteLine(novaTarefa.ExibirInformacoes());
 
+            tarefas.Add(novaTarefa);
             Console.WriteLine("\nTarefa cadastrada.");
+
+            if (status == "Pendente")
+            {
+                tarefasPendentes.Add(novaTarefa);
+            }
+            else if (status == "Concluída")
+            {
+                tarefasConcluidas.Add(novaTarefa);
+            }
+        }
+        static void ListarTarefa()
+        {
+            Console.WriteLine("Digite seu nome para ver suas listas de tarefas:");
+            string nome = Console.ReadLine();
+            Console.WriteLine("\nEscolha uma das opções:\n0.Sair\n1.Listar todas as tarefas\n2.Listar tarefas pendentes\n3.Listar tarefas concluídas");
+            string opcao;
+            while (true)
+            {
+                try
+                {
+                    opcao = Console.ReadLine();
+                    if (opcao == "0")
+                    {
+                        Console.WriteLine("Saindo...");
+                        return;
+                    }
+                    else if (opcao == "1")
+                    {
+                        foreach (var tarefa in tarefas)
+                        {
+                            if (tarefa.nome == nome)
+                            {
+                                Console.WriteLine($"{tarefa.titulo} - {tarefa.dataLimite} - {tarefa.status} - {tarefa.prioridade} - {tarefa.nome}");
+                            }
+                        }
+                    }
+                    else if (opcao == "2")
+                    {
+                        foreach (var tarefa in tarefasPendentes)
+                        {
+                            if (tarefa.nome == nome)
+                            {
+                                Console.WriteLine($"{tarefa.titulo} - {tarefa.dataLimite} - {tarefa.status} - {tarefa.prioridade} - {tarefa.nome}");
+                            }
+                        }
+                    }
+                    else if (opcao == "3")
+                    {
+                        foreach (var tarefa in tarefasConcluidas)
+                        {
+                            if (tarefa.nome == nome)
+                            {
+                                Console.WriteLine($"{tarefa.titulo} - {tarefa.dataLimite} - {tarefa.status} - {tarefa.prioridade} - {tarefa.nome}");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Inválido! Escolha uma das opções de 0 até 3.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("Digite a opção novamente:");
+                }
+            }
         }
     }
 }
