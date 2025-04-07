@@ -14,6 +14,9 @@
 
             var tarefa1 = new NovaTarefa("Fazer este trabalho", "08/04/2025", "Pendente", "Alta", "user teste");
             var tarefa2 = new NovaTarefa("Tarefa teste", "01/05/2025", "Concluido", "Média", "Simone");
+            var tarefa3 = new NovaTarefa("Fazer este trabalho2", "08/04/2025", "Em andamento", "Alta", "Simone");
+            var tarefa4 = new NovaTarefa("Tarefa teste2", "01/05/2025", "Em andamento", "Média", "Simone");
+            var tarefa5 = new NovaTarefa("Tarefa teste3", "01/05/2025", "Em andamento", "Média", "Simone");
 
             tarefas.Add(tarefa1);
             tarefas.Add(tarefa2);
@@ -93,7 +96,7 @@
             Console.WriteLine(novoResponsavel.ExibirInformacoes());
 
             usuarios.Add(novoResponsavel);
-            Console.WriteLine("\nUsuário cadastrado.");
+            Console.WriteLine("\nUsuário cadastrado!");
         }
         static void NovaTarefa()
         {
@@ -121,22 +124,70 @@
                 Console.WriteLine($"\nPrioridade:\n- Baixa.\n- Média.\n- Alta.");
                 string prioridade = Console.ReadLine();
 
-                Console.WriteLine("\nNome do usuário:");
-                string nome = Console.ReadLine();
+                string nome;
+                bool nomeValido = false;
 
-                int tarefasEmAndamento = 0;
-
-                foreach (var tarefa in tarefas)
+                while (true)
                 {
-                    if (tarefa.nome == nome && tarefa.status == "Em andamento")
+                    Console.WriteLine("\nNome do usuário responsável:");
+                    nome = Console.ReadLine();
+
+                    foreach (var usuario in usuarios)
                     {
-                        tarefasEmAndamento++;
+                        if (usuario.Nome == nome)
+                        {
+                            nomeValido = true;
+                            break;
+                        }
                     }
-                }
 
-                if (status == "Em andamento" && tarefasEmAndamento >= 3)
+                    if (nomeValido == false)
+                    {
+                        Console.WriteLine("Esse responsável não existe. Deseja tentar com outro nome? (S - Sim / N - Não)");
+                        string resposta = Console.ReadLine();
+
+                        if (resposta.ToUpper() == "N")
+                        {
+                            Console.WriteLine("\nRetornando ao menu...");
+                            return;
+                        } else
+                        {
+                            continue;
+                        }
+                    }
+
+                    int tarefasEmAndamento = 0;
+
+                    foreach (var tarefa in tarefas)
+                    {
+                        if (tarefa.nome == nome && tarefa.status == "Em andamento")
+                        {
+                            tarefasEmAndamento++;
+                        }
+                    }
+
+                    if (status == "Em andamento" && tarefasEmAndamento >= 3)
+                    {
+                        Console.WriteLine($"\nO responsável {nome} já possui 3 tarefas em andamento. Conclua alguma tarefa antes ou coloque essa tarefa para outro usúário.");
+                        Console.WriteLine("Deseja tentar com outro responsável? (S - Sim / N - Não)");
+                        string resposta = Console.ReadLine();
+
+                        if (resposta.ToUpper() == "N")
+                        {
+                            Console.WriteLine("\nRetornando ao menu...");
+                            return;
+                        } else
+                        {
+                            continue;
+                        }
+                    }
+                    break;
+                }
+               
+
+                if (prioridade == "Alta" && (dataLimite - DateTime.Now).TotalDays > 7)
                 {
-                    Console.WriteLine($"O responsável {nome} já possui 3 tarefas em andamento. Conclua alguma tarefa antes ou coloque essa tarefa para outro usúário.");
+                    Console.WriteLine("Tarefas de alta prioridade não podem ter data limite maior que uma semana.");
                     return;
                 }
 
