@@ -109,7 +109,7 @@
                 string titulo = Console.ReadLine();
 
                 string dataLimiteString;
-                DateTime dataLimite; 
+                DateTime dataLimite;
 
                 while (true)
                 {
@@ -134,7 +134,7 @@
                         Console.WriteLine("Data inválida. Use o formato dia/mês/ano.");
                     }
                 }
-                
+
 
                 Console.WriteLine($"\nStatus da tarefa:\n- Pendente.\n- Em andamento.\n- Concluída.");
                 string status = Console.ReadLine();
@@ -168,7 +168,8 @@
                         {
                             Console.WriteLine("\nRetornando ao menu...");
                             return;
-                        } else
+                        }
+                        else
                         {
                             continue;
                         }
@@ -194,14 +195,15 @@
                         {
                             Console.WriteLine("\nRetornando ao menu...");
                             return;
-                        } else
+                        }
+                        else
                         {
                             continue;
                         }
                     }
                     break;
                 }
-               
+
 
                 if (prioridade == "Alta" && (dataLimite - DateTime.Now).TotalDays > 7)
                 {
@@ -229,7 +231,7 @@
                 Console.WriteLine($"Erro ao cadastrar tarefa: {ex.Message}");
             }
         }
-            
+
 
         static void ExcluirTarefa()
         {
@@ -281,12 +283,14 @@
                         {
                             break;
                         }
-                    } else
+                    }
+                    else
                     {
                         Console.WriteLine("Tarefa não encontrada :(");
                         break;
                     }
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     Console.WriteLine($"\nOcorreu um erro ao tentar excluir a tarefa: {ex.Message}");
                 }
@@ -295,7 +299,8 @@
 
         static void AtualizarStatusTarefa()
         {
-            while (true) {
+            while (true)
+            {
                 try
                 {
                     Console.WriteLine("Digite o nome do responsável pela tarefa que deseja atualizar ou 0 para sair: ");
@@ -331,7 +336,7 @@
                                 case "1":
                                     novoStatus = "Pendente";
                                     break;
-                                case "2": 
+                                case "2":
                                     novoStatus = "Em andamento";
                                     break;
                                 case "3":
@@ -343,14 +348,16 @@
                             }
                             break;
                         }
-                        
+
                         string statusAnterior = tarefaParaAtualizar.status;
                         tarefaParaAtualizar.status = novoStatus;
 
                         if (statusAnterior == "Pendente")
                         {
                             tarefasPendentes.Remove(tarefaParaAtualizar);
-                        } else if (statusAnterior == "Concluída") {
+                        }
+                        else if (statusAnterior == "Concluída")
+                        {
                             tarefasConcluidas.Remove(tarefaParaAtualizar);
                         }
 
@@ -374,7 +381,8 @@
                             break;
                         }
                     }
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     Console.WriteLine($"Erro ao atualizar status: {ex.Message}");
                 }
@@ -382,57 +390,105 @@
         }
         static void ListarTarefa()
         {
-            foreach (var tarefa in tarefas)
-            {
-                Console.WriteLine($"\nTítulo: {tarefa.titulo}\nData Limite: {tarefa.dataLimite}\nStatus: {tarefa.status}\nPrioridade: {tarefa.prioridade}\nNome: {tarefa.nome}");
-            }
+            Console.WriteLine("\nEscolha uma das opções:\n0.Sair\n1.Listar todas as tarefas.\n2.Listar todas as tarefas de um usuário específico.");
+
             while (true)
             {
-                Console.WriteLine("\nDigite seu nome para ver suas listas de tarefas:");
-                string nome = Console.ReadLine();
-                Console.WriteLine("\nEscolha uma das opções:\n0.Sair\n1.Listar todas as tarefas\n2.Listar tarefas pendentes\n3.Listar tarefas concluídas");
-                string opcao;
                 try
                 {
+                    string opcao;
                     opcao = Console.ReadLine();
-                    if (opcao == "0")
-                    {
-                        Console.WriteLine("Saindo...");
-                        return;
-                    }
+
+                    if (opcao == "0") return;
+
                     else if (opcao == "1")
                     {
-                        foreach (var tarefa in tarefas)
+                        while (true)
                         {
-                            if (tarefa.nome == nome)
+                            Console.WriteLine("\nEscolha uma das opções:\n0.Sair\n1.Listar todas as tarefas\n2.Listar tarefas pendentes\n3.Listar tarefas concluídas");
+                            string opcao1 = Console.ReadLine();
+
+                            if (opcao1 == "0") break;
+
+                            else if (opcao1 == "1")
                             {
-                                Console.WriteLine($"\nTítulo: {tarefa.titulo}\nData Limite: {tarefa.dataLimite}\nStatus: {tarefa.status}\nPrioridade: {tarefa.prioridade}\nNome: {tarefa.nome}");
-                            } 
+                                foreach (var tarefa in tarefas)
+                                {
+                                    Console.WriteLine($"\nTítulo: {tarefa.titulo}\nData Limite: {tarefa.dataLimite}\nStatus: {tarefa.status}\nPrioridade: {tarefa.prioridade}\nNome: {tarefa.nome}");
+                                }
+                            }
+                            else if (opcao1 == "2")
+                            {
+                                foreach (var tarefa in tarefasPendentes)
+                                {
+                                    Console.WriteLine($"\nTítulo: {tarefa.titulo}\nData Limite: {tarefa.dataLimite}\nStatus: {tarefa.status}\nPrioridade: {tarefa.prioridade}\nNome: {tarefa.nome}");
+                                }
+                            }
+                            else if (opcao1 == "3")
+                            {
+                                foreach (var tarefa in tarefasConcluidas)
+                                {
+                                    Console.WriteLine($"\nTítulo: {tarefa.titulo}\nData Limite: {tarefa.dataLimite}\nStatus: {tarefa.status}\nPrioridade: {tarefa.prioridade}\nNome: {tarefa.nome}");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Inválido! Escolha uma das opções de 0 até 3.");
+                            }
                         }
                     }
                     else if (opcao == "2")
                     {
-                        foreach (var tarefa in tarefasPendentes)
+
+                        Console.WriteLine("\nDigite seu nome de usuário:");
+                        string nome = Console.ReadLine();
+
+                        while (true)
                         {
-                            if (tarefa.nome == nome)
+                            Console.WriteLine("\nEscolha uma das opções:\n0.Sair\n1.Listar todas as tarefas\n2.Listar tarefas pendentes\n3.Listar tarefas concluídas");
+                            string opcao2 = Console.ReadLine();
+
+                            if (opcao2 == "0") break;
+
+                            else if (opcao2 == "1")
                             {
-                                Console.WriteLine($"\nTítulo: {tarefa.titulo}\nData Limite: {tarefa.dataLimite}\nStatus: {tarefa.status}\nPrioridade: {tarefa.prioridade}\nNome: {tarefa.nome}");
+                                foreach (var tarefa in tarefas)
+                                {
+                                    if (tarefa.nome == nome)
+                                    {
+                                        Console.WriteLine($"\nTítulo: {tarefa.titulo}\nData Limite: {tarefa.dataLimite}\nStatus: {tarefa.status}\nPrioridade: {tarefa.prioridade}\nNome: {tarefa.nome}");
+                                    }
+                                }
+                            }
+                            else if (opcao2 == "2")
+                            {
+                                foreach (var tarefa in tarefasPendentes)
+                                {
+                                    if (tarefa.nome == nome)
+                                    {
+                                        Console.WriteLine($"\nTítulo: {tarefa.titulo}\nData Limite: {tarefa.dataLimite}\nStatus: {tarefa.status}\nPrioridade: {tarefa.prioridade}\nNome: {tarefa.nome}");
+                                    }
+                                }
+                            }
+                            else if (opcao2 == "3")
+                            {
+                                foreach (var tarefa in tarefasConcluidas)
+                                {
+                                    if (tarefa.nome == nome)
+                                    {
+                                        Console.WriteLine($"\nTítulo: {tarefa.titulo}\nData Limite: {tarefa.dataLimite}\nStatus: {tarefa.status}\nPrioridade: {tarefa.prioridade}\nNome: {tarefa.nome}");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Inválido! Escolha uma das opções de 0 até 3.");
                             }
                         }
-                    }
-                    else if (opcao == "3")
-                    {
-                        foreach (var tarefa in tarefasConcluidas)
-                        {
-                            if (tarefa.nome == nome)
-                            {
-                                Console.WriteLine($"\nTítulo: {tarefa.titulo}\nData Limite: {tarefa.dataLimite}\nStatus: {tarefa.status}\nPrioridade: {tarefa.prioridade}\nNome: {tarefa.nome}");
-                            }
-                        }
-                    }
+                    }   
                     else
                     {
-                        Console.WriteLine("Inválido! Escolha uma das opções de 0 até 3.");
+                        Console.WriteLine("Inválido! Escolha uma das opções de 0 até 2.");
                     }
                 }
                 catch (Exception ex)
@@ -444,9 +500,3 @@
         }
     }
 }
-
-
-
-
-
-
