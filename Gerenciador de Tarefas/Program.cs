@@ -10,13 +10,13 @@
         static void DadosTeste()
         {
             usuarios.Add(new NovoResponsavel("Simone", "simoninha@gmail.com"));
-            usuarios.Add(new NovoResponsavel("user teste", "teste@gmail.com"));
+            usuarios.Add(new NovoResponsavel("Jenie", "jenie@gmail.com"));
 
-            var tarefa1 = new NovaTarefa("Fazer este trabalho", "08/04/2025", "Pendente", "Alta", "user teste");
-            var tarefa2 = new NovaTarefa("Tarefa teste", "01/05/2025", "Concluido", "Média", "Simone");
-            var tarefa3 = new NovaTarefa("Fazer este trabalho2", "08/04/2025", "Em andamento", "Alta", "Simone");
-            var tarefa4 = new NovaTarefa("Tarefa teste2", "01/05/2025", "Em andamento", "Média", "Simone");
-            var tarefa5 = new NovaTarefa("Tarefa teste3", "01/05/2025", "Em andamento", "Média", "Simone");
+            var tarefa1 = new NovaTarefa("Fazer este trabalho", "08/04/2025", "Concluido", "Alta", "Jenie");
+            var tarefa2 = new NovaTarefa("Entregar atividades de Projeto de Vida", "10/04/2025", "Em andamento", "Alta", "Simone");
+            var tarefa3 = new NovaTarefa("Revisar o conteúdo de Estrutura de Dados", "20/04/2025", "Pendente", "Baixa", "Jenie");
+            var tarefa4 = new NovaTarefa("Fazer o trabalho de fabrica de projetos", "25/05/2025", "Em andamento", "Média", "Simone");
+            var tarefa5 = new NovaTarefa("Estudar para a prova de cloud computing", "09/04/2025", "Em andamento", "Média", "Simone");
 
             tarefas.Add(tarefa1);
             tarefas.Add(tarefa2);
@@ -34,16 +34,20 @@
             while (true)
             {
                 Console.WriteLine($@"
-                 Digite o número da opção que deseja:
-                 1 - Cadastrar um novo usuário.
-                 2 - Cadastrar uma nova tarefa.
-                 3 - Excluir uma tarefa.
-                 4 - Atualizar o status de uma tarefa.
-                 5 - Listar tarefas.
-                 0 - Sair.
-                ");
+--------------------------------------*
+Lista de Tarefas To-do
 
-                // fazer o tratamento de erros
+Digite o número da opção que deseja:
+ 1 - Cadastrar um novo usuário.
+ 2 - Cadastrar uma nova tarefa.
+ 3 - Excluir uma tarefa.
+ 4 - Atualizar o status de uma tarefa.
+ 5 - Listar tarefas.
+ 0 - Sair.
+
+--------------------------------------*
+
+");
 
                 string opcao = Console.ReadLine();
 
@@ -55,11 +59,11 @@
                             Console.WriteLine("Saindo...");
                             return;
                         case "1":
-                            Console.WriteLine("Cadastrar um novo usuário");
+                            Console.WriteLine("Cadastrar um novo usuário.");
                             CadastrarUsuario();
                             break;
                         case "2":
-                            Console.WriteLine("Cadastrar uma nova tarefa");
+                            Console.WriteLine("Cadastrar uma nova tarefa.");
                             NovaTarefa();
                             break;
                         case "3":
@@ -67,7 +71,7 @@
                             ExcluirTarefa();
                             break;
                         case "4":
-                            Console.WriteLine("Atualizar o status de uma tarefa");
+                            Console.WriteLine("Atualizar o status de uma tarefa.");
                             AtualizarStatusTarefa();
                             break;
                         case "5":
@@ -75,7 +79,7 @@
                             ListarTarefa();
                             break;
                         default:
-                            opcao = "Inválido";
+                            opcao = "Inválido...";
                             Console.WriteLine("Escolha uma opção de 0 até 5:");
                             break;
                     }
@@ -111,6 +115,9 @@
                 string dataLimiteString;
                 DateTime dataLimite;
 
+                Console.WriteLine($"\nPrioridade:\n- Baixa.\n- Média.\n- Alta.");
+                string prioridade = Console.ReadLine();
+
                 while (true)
                 {
                     Console.WriteLine("\nData Limite (formato: dd/mm/yyyy):");
@@ -126,8 +133,22 @@
                             Console.WriteLine("A data limite não pode estar no passado");
                             continue;
                         }
-                        break;
 
+                        if (prioridade == "Alta" && (dataLimite - DateTime.Now).TotalDays > 7)
+                        {
+                            Console.WriteLine("\nTarefas de alta prioridade não podem ter data limite maior que uma semana. Deseja colocar outra data? (S - Sim / N - Não)");
+                            string resposta = Console.ReadLine();
+                            if (resposta.ToUpper() == "N")
+                            {
+                                Console.WriteLine("\nRetornando ao menu...");
+                                return;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                        break;
                     }
                     catch
                     {
@@ -138,9 +159,6 @@
 
                 Console.WriteLine($"\nStatus da tarefa:\n- Pendente.\n- Em andamento.\n- Concluída.");
                 string status = Console.ReadLine();
-
-                Console.WriteLine($"\nPrioridade:\n- Baixa.\n- Média.\n- Alta.");
-                string prioridade = Console.ReadLine();
 
                 string nome;
                 bool nomeValido = false;
@@ -202,13 +220,6 @@
                         }
                     }
                     break;
-                }
-
-
-                if (prioridade == "Alta" && (dataLimite - DateTime.Now).TotalDays > 7)
-                {
-                    Console.WriteLine("Tarefas de alta prioridade não podem ter data limite maior que uma semana.");
-                    return;
                 }
 
                 NovaTarefa novaTarefa = new NovaTarefa(titulo, dataLimiteString, status, prioridade, nome);
@@ -325,7 +336,7 @@
                     if (tarefaParaAtualizar != null)
                     {
                         Console.WriteLine($"\nTítulo: {tarefaParaAtualizar.titulo}\nData Limite: {tarefaParaAtualizar.dataLimite}\nStatus: {tarefaParaAtualizar.status}\nPrioridade: {tarefaParaAtualizar.prioridade}\nNome: {tarefaParaAtualizar.nome}");
-                        Console.WriteLine($"\n\nStatus atual da tarefa: {tarefaParaAtualizar.status}\nDigite o novo status da tarefa (1 - Pendente, 2 - Em andamento, 3 - Concluída)");
+                        Console.WriteLine($"\n\nStatus atual da tarefa: {tarefaParaAtualizar.status}\nDigite o novo status da tarefa: \n1 - Pendente\n2 - Em andamento\n3 - Concluída");
                         string novoStatus = "";
 
                         while (true)
@@ -388,6 +399,7 @@
                 }
             }
         }
+
         static void ListarTarefa()
         {
             Console.WriteLine("\nEscolha uma das opções:\n0.Sair\n1.Listar todas as tarefas.\n2.Listar todas as tarefas de um usuário específico.");
@@ -485,7 +497,7 @@
                                 Console.WriteLine("Inválido! Escolha uma das opções de 0 até 3.");
                             }
                         }
-                    }   
+                    }
                     else
                     {
                         Console.WriteLine("Inválido! Escolha uma das opções de 0 até 2.");
