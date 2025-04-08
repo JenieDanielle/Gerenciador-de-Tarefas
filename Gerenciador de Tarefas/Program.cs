@@ -20,6 +20,9 @@
 
             tarefas.Add(tarefa1);
             tarefas.Add(tarefa2);
+            tarefas.Add(tarefa3);
+            tarefas.Add(tarefa4);
+            tarefas.Add(tarefa5);
 
             tarefasPendentes.Add(tarefa1);
             tarefasConcluidas.Add(tarefa2);
@@ -105,18 +108,33 @@
                 Console.WriteLine("\nTítulo:");
                 string titulo = Console.ReadLine();
 
-                Console.WriteLine("\nData Limite (formato: dd/mm/yyyy):");
-                string dataLimiteString = Console.ReadLine();
+                string dataLimiteString;
+                DateTime dataLimite; 
 
-                DateTime dataLimite = DateTime.Now;
-                try
+                while (true)
                 {
-                    dataLimite = Convert.ToDateTime(dataLimiteString);
-                } catch
-                {
-                    Console.WriteLine("Data inválida. Use o formato dia/mês/ano.");
-                    return;
+                    Console.WriteLine("\nData Limite (formato: dd/mm/yyyy):");
+                    dataLimiteString = Console.ReadLine();
+
+                    dataLimite = DateTime.Now;
+                    try
+                    {
+                        dataLimite = Convert.ToDateTime(dataLimiteString);
+
+                        if (dataLimite < DateTime.Now.Date)
+                        {
+                            Console.WriteLine("A data limite não pode estar no passado");
+                            continue;
+                        }
+                        break;
+
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Data inválida. Use o formato dia/mês/ano.");
+                    }
                 }
+                
 
                 Console.WriteLine($"\nStatus da tarefa:\n- Pendente.\n- Em andamento.\n- Concluída.");
                 string status = Console.ReadLine();
@@ -426,3 +444,9 @@
         }
     }
 }
+
+
+
+
+
+
