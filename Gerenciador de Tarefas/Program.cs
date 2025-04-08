@@ -320,7 +320,7 @@ Digite o número da opção que deseja:
 
                     Console.WriteLine("Digite o titulo da tarefa que deseja atualizar ou 0 para sair:");
                     string titulo = Console.ReadLine();
-                    if (nome == "0") break;
+                    if (titulo == "0") break;
 
                     NovaTarefa tarefaParaAtualizar = null;
 
