@@ -86,7 +86,7 @@ Digite o número da opção que deseja:
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Exceção 1 - Exception\n{ex}");
+                    Console.WriteLine($"Exceção - Exception\n{ex}");
                 }
             }
         }
@@ -114,9 +114,39 @@ Digite o número da opção que deseja:
 
                 string dataLimiteString;
                 DateTime dataLimite;
+                string prioridade = "";
 
-                Console.WriteLine($"\nPrioridade:\n- Baixa.\n- Média.\n- Alta.");
-                string prioridade = Console.ReadLine();
+                while (true)
+                {
+                    Console.WriteLine($"\nPrioridade:\n1 - Baixa.\n2 - Média.\n3 - Alta.");
+
+                    try
+                    {
+                        string opcao = Console.ReadLine();
+                        switch (opcao)
+                        {
+                            case "1":
+                                prioridade = "Baixa";
+                                break;
+                            case "2":
+                                prioridade = "Média";
+                                break;
+                            case "3":
+                                prioridade = "Alta";
+                                break;
+                            default:
+                                opcao = "Inválido...";
+                                Console.WriteLine("Escolha uma opção entre 1 e 3:");
+                                continue;
+                        }
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Exceção - Exception\n{ex}");
+                    }
+                }
+
 
                 while (true)
                 {
@@ -157,8 +187,37 @@ Digite o número da opção que deseja:
                 }
 
 
-                Console.WriteLine($"\nStatus da tarefa:\n- Pendente.\n- Em andamento.\n- Concluída.");
+                Console.WriteLine($"\nStatus da tarefa:\n1 - Pendente.\n2 - Em andamento.\n3 - Concluída.");
                 string status = Console.ReadLine();
+
+                while (true)
+                {
+                    try
+                    {
+                        string opcao = Console.ReadLine();
+                        switch (opcao)
+                        {
+                            case "1":
+                                status = "Pendente";
+                                break;
+                            case "2":
+                                status = "Em andamento";
+                                break;
+                            case "3":
+                                status = "Concluída";
+                                break;
+                            default:
+                                opcao = "Inválido...";
+                                Console.WriteLine("Escolha uma opção entre 1 e 3:");
+                                continue;
+                        }
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Exceção - Exception\n{ex}");
+                    }
+                }
 
                 string nome;
                 bool nomeValido = false;
@@ -285,7 +344,7 @@ Digite o número da opção que deseja:
                         }
                         else
                         {
-                            Console.WriteLine("Exclusão cancelada");
+                            Console.WriteLine("Exclusão cancelada...");
                         }
 
                         Console.WriteLine("\n\nDeseja excluir mais alguma tarefa? S - Sim N - Não");
@@ -391,6 +450,9 @@ Digite o número da opção que deseja:
                         {
                             break;
                         }
+                    } else
+                    {
+                        Console.WriteLine("Nenhuma tarefa encontrada...");
                     }
                 }
                 catch (Exception ex)
@@ -452,7 +514,7 @@ Digite o número da opção que deseja:
                     else if (opcao == "2")
                     {
 
-                        Console.WriteLine("\nDigite seu nome de usuário:");
+                        Console.WriteLine("\nDigite o nome de usuário:");
                         string nome = Console.ReadLine();
 
                         while (true)
