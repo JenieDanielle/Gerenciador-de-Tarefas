@@ -24,8 +24,8 @@
             tarefas.Add(tarefa4);
             tarefas.Add(tarefa5);
 
-            tarefasPendentes.Add(tarefa1);
-            tarefasConcluidas.Add(tarefa2);
+            tarefasPendentes.Add(tarefa3);
+            tarefasConcluidas.Add(tarefa1);
         }
         static void Main()
         {
@@ -420,8 +420,18 @@ Digite o número da opção que deseja:
                         }
 
                         //string statusAnterior = tarefaParaAtualizar.status;
-                        tarefasConcluidas.Remove(tarefaParaAtualizar);
-                        tarefasPendentes.Remove(tarefaParaAtualizar);
+                        //tarefasConcluidas.Remove(tarefaParaAtualizar);
+                        //tarefasPendentes.Remove(tarefaParaAtualizar);
+
+                        if (tarefaParaAtualizar.status == "Pendente")
+                        {
+                            tarefasPendentes.Remove(tarefaParaAtualizar);
+                        }
+                        else if (tarefaParaAtualizar.status == "Concluída")
+                        {
+                            tarefasConcluidas.Remove(tarefaParaAtualizar);
+                        }
+
                         tarefaParaAtualizar.status = novoStatus;
 
                         if (novoStatus == "Pendente")
