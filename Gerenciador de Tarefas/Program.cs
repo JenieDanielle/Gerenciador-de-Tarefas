@@ -419,17 +419,10 @@ Digite o número da opção que deseja:
                             break;
                         }
 
-                        string statusAnterior = tarefaParaAtualizar.status;
+                        //string statusAnterior = tarefaParaAtualizar.status;
+                        tarefasConcluidas.Remove(tarefaParaAtualizar);
+                        tarefasPendentes.Remove(tarefaParaAtualizar);
                         tarefaParaAtualizar.status = novoStatus;
-
-                        if (statusAnterior == "Pendente")
-                        {
-                            tarefasPendentes.Remove(tarefaParaAtualizar);
-                        }
-                        else if (statusAnterior == "Concluída")
-                        {
-                            tarefasConcluidas.Remove(tarefaParaAtualizar);
-                        }
 
                         if (novoStatus == "Pendente")
                         {
